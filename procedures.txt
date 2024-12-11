@@ -1,0 +1,179 @@
+--First Procedure
+
+--create or replace NONEDITIONABLE PROCEDURE get_students_with_lessons_today (students_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN students_cursor FOR
+--  SELECT s.*
+--  FROM students s
+--  INNER JOIN lessons l
+--    ON s.student_id = l.student_id
+--  WHERE TRUNC(l.lesson_date) = TRUNC(SYSDATE);
+--END get_students_with_lessons_today;
+
+
+--Second procedure
+
+--create or replace NONEDITIONABLE PROCEDURE get_students_started_in_year (students_cursor OUT SYS_REFCURSOR, p_year IN NUMBER)
+--IS
+--BEGIN
+--  OPEN students_cursor FOR
+--  SELECT s.*
+--  FROM students s
+--  WHERE EXTRACT(YEAR FROM s.start_date) = p_year;
+--END get_students_started_in_year;
+
+
+--Third Procedure
+
+--CREATE OR REPLACE PROCEDURE get_courses_with_lessons_today (courses_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN courses_cursor FOR
+--  SELECT DISTINCT c.*
+--  FROM courses c
+--  INNER JOIN lessons l ON l.course_id = c.course_id
+--  WHERE TRUNC(l.lesson_date) = TRUNC(SYSDATE);
+--END get_courses_with_lessons_today;
+
+
+--Procedure no4
+
+--CREATE OR REPLACE PROCEDURE get_courses_with_max_lessons (courses_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN courses_cursor FOR
+--  SELECT c.*, COUNT(l.lesson_id) AS lesson_count
+--  FROM courses c
+--  INNER JOIN lessons l ON l.course_id = c.course_id
+--  GROUP BY c.course_id, c.course_name, c.course_description, c.course_duration, c.course_fee
+--  ORDER BY lesson_count DESC;
+--END get_courses_with_max_lessons;
+
+
+-- Procedure no5
+
+--CREATE OR REPLACE PROCEDURE get_instructors_with_max_lessons_next_week (instructors_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN instructors_cursor FOR
+--  SELECT i.*, COUNT(l.lesson_id) AS lesson_count
+--  FROM instructors i
+--  INNER JOIN lessons l ON l.instructor_id = i.instructor_id
+--  WHERE l.lesson_date BETWEEN SYSDATE AND SYSDATE + 7
+--  GROUP BY i.instructor_id, i.first_name, i.last_name, i.date_of_birth, i.phone_number, i.email, i.address, i.hire_date
+--  ORDER BY lesson_count DESC;
+--END get_instructors_with_max_lessons_next_week;
+
+
+-- Procedure no6
+
+--CREATE OR REPLACE PROCEDURE get_instructors_birthday_in_month (in_month IN NUMBER, instructors_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN instructors_cursor FOR
+--  SELECT *
+--  FROM instructors
+--  WHERE TO_CHAR(date_of_birth, 'MM') = TO_CHAR(in_month);
+--END get_instructors_birthday_in_month;
+
+
+-- Procedure no5
+
+--CREATE OR REPLACE PROCEDURE get_vehicles_needing_maintenance (vehicles_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN vehicles_cursor FOR
+--  SELECT *
+--  FROM vehicles
+--  WHERE maintenance_date <= SYSDATE + 30;
+--END get_vehicles_needing_maintenance;
+
+--Procedure no 6
+
+--CREATE OR REPLACE PROCEDURE get_assigned_vehicles (vehicles_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN vehicles_cursor FOR
+--  SELECT v.*
+--  FROM vehicles v JOIN vehicle_assignments va ON v.vehicle_id = va.vehicle_id
+--  WHERE va.status = 1;
+--END get_assigned_vehicles;
+
+
+--Procedure no7
+
+--CREATE OR REPLACE PROCEDURE active_assignments (assignments_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN assignments_cursor FOR
+--  SELECT *
+--  FROM vehicle_assignments
+--  WHERE status = 1;
+--END active_assignments;
+
+
+--Procedure no8
+
+--CREATE OR REPLACE PROCEDURE inactive_assignments (assignments_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN assignments_cursor FOR
+--  SELECT *
+--  FROM vehicle_assignments
+--  WHERE status = 0;
+--END inactive_assignments;
+
+--Procedure no9
+
+--CREATE OR REPLACE PROCEDURE lessons_today (lessons_cursor OUT SYS_REFCURSOR)
+--IS
+--BEGIN
+--  OPEN lessons_cursor FOR
+--  SELECT *
+--  FROM lessons
+--  WHERE lesson_date = CURRENT_DATE;
+--END lessons_today;
+
+
+--Procedure no10
+
+--CREATE OR REPLACE PROCEDURE upcoming_lessons (
+--  p_instructor_id IN instructors.instructor_id%TYPE,
+--  p_result OUT SYS_REFCURSOR
+--) AS
+--BEGIN
+--  OPEN p_result FOR
+--  SELECT *
+--  FROM lessons
+--  WHERE instructor_id = p_instructor_id
+--    AND lesson_date BETWEEN CURRENT_DATE AND (CURRENT_DATE + 7);
+--END upcoming_lessons;
+
+
+--Procedure no11
+
+--CREATE OR REPLACE PROCEDURE passed_tests (
+--  p_student_id IN students.student_id%TYPE,
+--  p_result OUT SYS_REFCURSOR
+--) AS
+--BEGIN
+--  OPEN p_result FOR
+--  SELECT *
+--  FROM tests
+--  WHERE student_id = p_student_id AND result = 1;
+--END passed_tests;
+
+
+--Procedure no12
+
+--CREATE OR REPLACE PROCEDURE average_test_score (
+--  p_course_id IN courses.course_id%TYPE,
+--  p_result OUT NUMBER
+--) AS
+--BEGIN
+--  SELECT AVG(score) INTO p_result
+--  FROM tests
+--  WHERE course_id = p_course_id;
+--END average_test_score;
+

@@ -1,0 +1,75 @@
+``` CREATE TABLE courses (
+  course_id NUMBER(10,0) GENERATED ALWAYS AS IDENTITY,
+  course_description VARCHAR2(255 CHAR),
+  course_duration NUMBER(10,0),
+  course_fee NUMBER(38,2),
+  course_name VARCHAR2(255 CHAR),
+  PRIMARY KEY (course_id)
+);
+
+CREATE TABLE instructors (
+  instructor_id NUMBER(10,0) GENERATED ALWAYS AS IDENTITY,
+  address VARCHAR2(255 CHAR),
+  date_of_birth DATE,
+  email VARCHAR2(255 CHAR),
+  first_name VARCHAR2(255 CHAR),
+  hire_date DATE,
+  last_name VARCHAR2(255 CHAR),
+  phone_number VARCHAR2(255 CHAR),
+  PRIMARY KEY (instructor_id)
+);
+
+CREATE TABLE lessons (
+  lesson_id NUMBER(10,0) GENERATED ALWAYS AS IDENTITY,
+  end_time TIMESTAMP(6),
+  lesson_date DATE,
+  start_time TIMESTAMP(6),
+  course_id NUMBER(10,0) NOT NULL,
+  instructor_id NUMBER(10,0) NOT NULL,
+  student_id NUMBER(10,0) NOT NULL,
+  assignment_id NUMBER(10,0) NOT NULL,
+  PRIMARY KEY (lesson_id)
+);
+
+CREATE TABLE students (
+  student_id NUMBER(10,0) GENERATED ALWAYS AS IDENTITY,
+  address VARCHAR2(255 CHAR),
+  date_of_birth DATE,
+  email VARCHAR2(255 CHAR),
+  first_name VARCHAR2(255 CHAR),
+  last_name VARCHAR2(255 CHAR),
+  phone_number VARCHAR2(255 CHAR),
+  start_date DATE,
+  PRIMARY KEY (student_id)
+);
+
+CREATE TABLE tests (
+  test_id NUMBER(10,0) GENERATED ALWAYS AS IDENTITY,
+  result NUMBER(1,0) CHECK (result IN (0,1)),
+  score NUMBER(10,0),
+  test_date DATE,
+  course_id NUMBER(10,0) NOT NULL,
+  instructor_id NUMBER(10,0) NOT NULL,
+  student_id NUMBER(10,0) NOT NULL,
+  PRIMARY KEY (test_id)
+);
+
+CREATE TABLE vehicle_assignments (
+  assignment_id NUMBER(10,0) GENERATED ALWAYS AS IDENTITY,
+  status NUMBER(1,0) CHECK (status IN (0,1)),
+  vehicle_id NUMBER(10,0) NOT NULL,
+  PRIMARY KEY (assignment_id)
+);
+
+CREATE TABLE vehicles (
+  vehicle_id NUMBER(10,0) GENERATED ALWAYS AS IDENTITY,
+  color VARCHAR2(255 CHAR),
+  license_plate VARCHAR2(255 CHAR),
+  maintenance_date DATE,
+  make VARCHAR2(255 CHAR),
+  model VARCHAR2(255 CHAR),
+  registration_date DATE,
+  year VARCHAR2(255 CHAR),
+  PRIMARY KEY (vehicle_id)
+);
+ ```
