@@ -41,6 +41,8 @@ public class Vehicle {
 
     private String color;
 
+    private double rantPerHour;
+
     private LocalDate registrationDate;
 
     private LocalDate maintenanceDate;
@@ -48,4 +50,10 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle")
     @JsonIgnore
     private List<VehicleAssignment> assignments;
+
+    private Boolean canBeRented; // Indicates if the vehicle can be rented
+    private Boolean isReanted;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<RentedCar> rentedCars;
 }

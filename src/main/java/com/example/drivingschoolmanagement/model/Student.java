@@ -3,6 +3,7 @@ package com.example.drivingschoolmanagement.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,22 +28,10 @@ import java.util.List;
                 @StoredProcedureParameter(mode = ParameterMode.IN, type = Integer.class, name = "p_year")
         }
 )
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer studentId;
-
-    private String firstName;
-
-    private String lastName;
-
-    private LocalDate dateOfBirth;
-
-    private String phoneNumber;
-
-    private String email;
-
-    private String address;
+public class Student  extends User{
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Integer studentId;
 
     private LocalDate startDate;
     @JsonIgnore

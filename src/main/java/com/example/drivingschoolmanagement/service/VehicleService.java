@@ -21,6 +21,9 @@ public class VehicleService {
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
     }
+    public List<Vehicle> rantRadyVehicles() {
+        return vehicleRepository.findByCanBeRentedTrueAndIsReantedFalse();
+    }
 
     public Vehicle getVehicleById(Integer vehicleId) {
         return vehicleRepository.findById(vehicleId).orElse(null);

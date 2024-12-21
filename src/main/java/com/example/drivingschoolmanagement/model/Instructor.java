@@ -3,6 +3,7 @@ package com.example.drivingschoolmanagement.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,30 +28,19 @@ import java.util.List;
                 @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class)
         }
 )
-public class Instructor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer instructorId;
-
-    private String firstName;
-
-    private String lastName;
-
-    private LocalDate dateOfBirth;
-
-    private String phoneNumber;
-
-    private String email;
-
-    private String address;
-
-    private LocalDate hireDate;
-
-    @OneToMany(mappedBy = "instructor")
-    @JsonIgnore
-    private List<Lesson> lessons;
-
-    @OneToMany(mappedBy = "instructor")
-    @JsonIgnore
-    private List<Test> tests;
+public class Instructor extends User{
+        // @Id
+        // @GeneratedValue(strategy = GenerationType.IDENTITY)
+        // private Integer instructorId; // Use a single field for primary key
+    
+        private LocalDate hireDate;
+        private double salary;
+    
+        @OneToMany(mappedBy = "instructor")
+        @JsonIgnore
+        private List<Lesson> lessons;
+    
+        @OneToMany(mappedBy = "instructor")
+        @JsonIgnore
+        private List<Test> tests;
 }

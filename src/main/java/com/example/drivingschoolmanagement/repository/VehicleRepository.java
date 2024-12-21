@@ -11,4 +11,5 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     List<Vehicle> findVehiclesNeedingMaintenance();
     @Procedure(name = "get_assigned_vehicles")
     List<Vehicle> findAssignedVehicles();
+    List<Vehicle> findByCanBeRentedTrueAndIsReantedFalse();
 }
