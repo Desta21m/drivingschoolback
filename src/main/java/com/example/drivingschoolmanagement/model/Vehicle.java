@@ -55,5 +55,6 @@ public class Vehicle {
     private Boolean isReanted;
 
     @OneToMany(mappedBy = "vehicle")
+    @JsonIgnore
     private List<RentedCar> rentedCars;
 }

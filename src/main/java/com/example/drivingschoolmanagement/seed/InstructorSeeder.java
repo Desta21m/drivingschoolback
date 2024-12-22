@@ -24,12 +24,12 @@ public class InstructorSeeder {
         Faker faker = new Faker();
         for (int i = 0; i < 10; i++) {
             Instructor instructor = new Instructor();
-            // instructor.setFirstName(faker.name().firstName());
-            // instructor.setLastName(faker.name().lastName());
-            // instructor.setDateOfBirth(convertToLocalDateViaInstant(faker.date().birthday()));
-            // instructor.setPhoneNumber(faker.phoneNumber().phoneNumber());
-            // instructor.setEmail(faker.internet().emailAddress());
-            // instructor.setAddress(faker.address().fullAddress());
+            instructor.setFirstName(faker.name().firstName());
+            instructor.setLastName(faker.name().lastName());
+            instructor.setDateOfBirth(convertToLocalDateViaInstant(faker.date().birthday()));
+            instructor.setPhoneNumber(faker.phoneNumber().phoneNumber());
+            instructor.setEmail(faker.internet().emailAddress());
+            instructor.setAddress(faker.address().fullAddress());
             instructor.setHireDate(LocalDate.now());
             instructorService.saveInstructor(instructor);
         }

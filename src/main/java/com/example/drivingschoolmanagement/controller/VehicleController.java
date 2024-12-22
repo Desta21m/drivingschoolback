@@ -19,6 +19,10 @@ public class VehicleController {
     public List<Vehicle> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
+    @GetMapping("/rentables")
+    public List<Vehicle> rentRadyVehicles() {
+        return vehicleService.rantRadyVehicles();
+    }
 
     @GetMapping("/{vehicleId}")
     public Vehicle getVehicleById(@PathVariable Integer vehicleId) {

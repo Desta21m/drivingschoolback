@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/rented-cars")
@@ -40,14 +41,20 @@ public class RentedCarController {
 
     // Create a new rented car
     @PostMapping
-    public ResponseEntity<RentedCar> createRentedCar(@RequestBody RenteCarDTO renteCarDTO) {
+    public ResponseEntity<?> createRentedCar(@RequestBody RenteCarDTO renteCarDTO) {
         try {
             RentedCar newRentedCar = renteCarService.saveRentedCar(renteCarDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(newRentedCar);
+        } catch (IllegalArgumentException e) {
+            // Return a specific error message for validation issues
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            // Catch-all for unexpected errors
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "An unexpected error occurred."));
         }
     }
+    
 
     // Delete rented car by ID
     @DeleteMapping("/{id}")

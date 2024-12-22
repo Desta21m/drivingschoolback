@@ -30,6 +30,7 @@ public class VehicleService {
     }
 
     public Vehicle saveVehicle(Vehicle vehicle) {
+        vehicle.setIsReanted(false);
         return vehicleRepository.save(vehicle);
     }
 

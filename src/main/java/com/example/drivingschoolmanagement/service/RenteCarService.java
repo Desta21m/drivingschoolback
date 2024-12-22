@@ -48,54 +48,43 @@ public class RenteCarService {
 
     public RentedCar saveRentedCar(RenteCarDTO newR) {
         RentedCar rentedCar = new RentedCar();
-        Customer cin=newR.getCustomer();
-        Vehicle v= vehicleRepository.findById(newR.getVihecleId()).orElse(null);
-        if(cin==null){
-            Student s= studentRepository.findById(newR.getStudId()).orElse(null);
-            Instructor i=instructorRepository.findById(newR.getLectId()).orElse(null);
-            if(s==null){
-                i.getRentalHistory().add(rentedCar);
-                rentedCar.setRenter( i);
-            }
-            else {
-                s.getRentalHistory().add(rentedCar);
-                rentedCar.setRenter(s);
-            }
-            
+        Vehicle v = vehicleRepository.findById(newR.getVihecleId())
+            .orElseThrow(() -> new IllegalArgumentException("Vehicle not found with ID: " + newR.getVihecleId()));
+        
+        if (newR.getCustomer() != null) {
+            Customer c = customerRepository.findById(newR.getCustomer())
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found with ID: " + newR.getCustomer()));
+            c.getRentalHistory().add(rentedCar);
+            rentedCar.setRenter(c);
+        } else if (newR.getStudId() != null) {
+            Student s = studentRepository.findById(newR.getStudId())
+                .orElseThrow(() -> new IllegalArgumentException("Student not found with ID: " + newR.getStudId()));
+            s.getRentalHistory().add(rentedCar);
+            rentedCar.setRenter(s);
+        } else if (newR.getLectId() != null) {
+            Instructor i = instructorRepository.findById(newR.getLectId())
+                .orElseThrow(() -> new IllegalArgumentException("Instructor not found with ID: " + newR.getLectId()));
+            i.getRentalHistory().add(rentedCar);
+            rentedCar.setRenter(i);
+        } else {
+            throw new IllegalArgumentException("No valid renter found (customer, student, or instructor).");
         }
-        else{
-            Customer c= customerRepository.findByPhoneNumber(cin.getPhoneNumber()).orElse(null);
-            if(c==null){
-                Customer cc= new Customer();
-                cc.setPhoneNumber(cin.getPhoneNumber());
-                cc.setAddress(cin.getAddress());
-                cc.setCompanyName(cin.getCompanyName());
-                cc.setDateOfBirth(cin.getDateOfBirth());
-                cc.setEmail(cin.getEmail());
-                cc.setFirstName(cin.getFirstName());
-                cc.setLastName(cin.getLastName());
-                cc.setPhoneNumber(cin.getPhoneNumber());
-                cc.setReferralSource(cin.getReferralSource());
-                cc.getRentalHistory().add(rentedCar);
-
-                rentedCar.setRenter(customerRepository.save(cc));
-            }
-            else{
-                c.getRentalHistory().add(rentedCar);
-                rentedCar.setRenter(c);
-            }
-        }
+    
         rentedCar.setVehicle(v);
         rentedCar.setIsActive(true);
-        rentedCar.setRentalEndDate(newR.getRentalEndDate());
         rentedCar.setRentalStartDate(newR.getRentalStartDate());
-        rentedCar.setRentalPrice(calculateRentalPrice(newR.getRentalStartDate(),newR.getRentalEndDate(),v.getRantPerHour()));
-
-
-        
-
+        rentedCar.setRentalEndDate(newR.getRentalEndDate());
+        rentedCar.setRentalPrice(calculateRentalPrice(
+            newR.getRentalStartDate(), newR.getRentalEndDate(), v.getRantPerHour()
+        ));
+    
+        v.setIsReanted(true);
+        vehicleRepository.save(v);
+    
         return rentedCarRepository.save(rentedCar);
     }
+    
+    
     public void deleterentedCar(Integer rentedCarId) {
         rentedCarRepository.deleteById(rentedCarId);
     }

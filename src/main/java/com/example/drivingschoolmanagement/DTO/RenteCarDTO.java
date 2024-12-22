@@ -8,9 +8,9 @@ import lombok.Data;
 
 @Data
 public class RenteCarDTO {
-    private Customer customer;
+    private Integer customer;
     private Integer studId;
-    private Integer LectId;
+    private Integer lectId;
     private Integer vihecleId;
 
     private LocalDateTime rentalStartDate;
