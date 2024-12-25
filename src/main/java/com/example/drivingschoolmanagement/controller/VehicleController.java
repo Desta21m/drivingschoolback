@@ -51,5 +51,15 @@ public class VehicleController {
     public List<Vehicle> getAssignedVehicles() {
         return vehicleService.getAssignedVehicles();
     }
+    @GetMapping("/rented")
+    public List<Vehicle> reantedVehicles() {
+        return vehicleService.getRentedVehicles();
+    }
+
+    @GetMapping("/assignable")
+    public List<Vehicle> assignableVehicles() {
+        return vehicleService.assignableVehicles();
+    }
+
 }
 

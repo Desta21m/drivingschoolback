@@ -11,23 +11,23 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "students")
-@NamedStoredProcedureQuery(
-        name = "get_students_with_lessons_today",
-        procedureName = "get_students_with_lessons_today",
-        resultClasses = {Student.class},
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class)
-        }
-)
-@NamedStoredProcedureQuery(
-        name = "get_students_started_in_year",
-        procedureName = "get_students_started_in_year",
-        resultClasses = {Student.class},
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class, name = "students_cursor"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = Integer.class, name = "p_year")
-        }
-)
+// @NamedStoredProcedureQuery(
+//         name = "get_students_with_lessons_today",
+//         procedureName = "get_students_with_lessons_today",
+//         resultClasses = {Student.class},
+//         parameters = {
+//                 @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class)
+//         }
+// )
+// @NamedStoredProcedureQuery(
+//         name = "get_students_started_in_year",
+//         procedureName = "get_students_started_in_year",
+//         resultClasses = {Student.class},
+//         parameters = {
+//                 @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class, name = "students_cursor"),
+//                 @StoredProcedureParameter(mode = ParameterMode.IN, type = Integer.class, name = "p_year")
+//         }
+// )
 public class Student  extends User{
 //     @Id
 //     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -60,8 +60,6 @@ public class Lesson {
     @JsonIgnore
     private Instructor instructor;
 
-    private LocalDate lessonDate;
-
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;

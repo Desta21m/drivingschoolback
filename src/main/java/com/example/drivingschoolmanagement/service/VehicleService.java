@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,11 +38,25 @@ public class VehicleService {
     public void deleteVehicle(Integer vehicleId) {
         vehicleRepository.deleteById(vehicleId);
     }
+     // Method to get vehicles needing maintenance
     public List<Vehicle> getVehiclesNeedingMaintenance() {
-        return vehicleRepository.findVehiclesNeedingMaintenance();
+        LocalDate today = LocalDate.now(); // Get today's date
+        return vehicleRepository.findVehiclesNeedingMaintenance(today);
     }
+
+    // Method to get assigned vehicles
     public List<Vehicle> getAssignedVehicles() {
         return vehicleRepository.findAssignedVehicles();
+    }
+
+    // Method to get rented vehicles
+    public List<Vehicle> getRentedVehicles() {
+        return vehicleRepository.findRentedVehicles();
+    }
+
+    public List<Vehicle> assignableVehicles() {
+        LocalDate today = LocalDate.now();
+        return vehicleRepository.findAssignableVehicles(today);
     }
 
 }

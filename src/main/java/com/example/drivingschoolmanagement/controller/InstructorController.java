@@ -1,5 +1,6 @@
 package com.example.drivingschoolmanagement.controller;
 
+import com.example.drivingschoolmanagement.DTO.InstructorLessonCountDTO;
 import com.example.drivingschoolmanagement.model.Instructor;
 import com.example.drivingschoolmanagement.service.InstructorService;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class InstructorController {
 
 
     @GetMapping("/max_lessons_next_week")
-    public List<Instructor> getInstructorsWithMaxLessonsNextWeek() {
+    public List<InstructorLessonCountDTO>getInstructorsWithMaxLessonsNextWeek() {
         return instructorService.getInstructorsWithMaxLessonsNextWeek();
     }
 

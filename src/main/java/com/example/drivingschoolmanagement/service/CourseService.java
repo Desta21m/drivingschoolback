@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,9 +35,16 @@ public class CourseService {
     public void deleteCourse(Integer courseId) {
         courseRepository.deleteById(courseId);
     }
+    // Method to get courses with lessons scheduled for today
     public List<Course> getCoursesWithLessonsToday() {
-        return courseRepository.findCoursesWithLessonsToday();
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(23, 59, 59); // End of day
+        
+        return courseRepository.findCoursesWithLessonsToday(startOfDay, endOfDay);
     }
+
+    // Method to get courses with the maximum number of lessons
     public List<Course> getCoursesWithMaxLessons() {
         return courseRepository.findCoursesWithMaxLessons();
     }

@@ -43,7 +43,7 @@ public class LessonController {
 
     @GetMapping("/today")
     public List<Lesson> getLessonsToday() {
-        return lessonService.getLessonsToday();
+        return lessonService.getLessonsForToday();
     }
 
     @GetMapping("/upcoming/{instructorId}")

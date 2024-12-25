@@ -47,7 +47,6 @@ public class LessonSeeder {
             lesson.setStudent(students.get(i));
             lesson.setInstructor(instructors.get(i % instructors.size()));
             lesson.setVehicleAssignment(vehicleAssignments.get(i % vehicleAssignments.size()));
-            lesson.setLessonDate(LocalDate.now());
             lesson.setStartTime(LocalDateTime.ofInstant(faker.date().past(10, 0, TimeUnit.DAYS).toInstant(), ZoneId.systemDefault()));
             lesson.setEndTime(LocalDateTime.ofInstant(faker.date().future(10, 0, TimeUnit.DAYS).toInstant(), ZoneId.systemDefault()));
             lessonService.saveLesson(lesson);
